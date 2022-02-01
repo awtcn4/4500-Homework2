@@ -1,0 +1,73 @@
+import java.util.Arrays;
+import java.util.Random;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		// set the empty deck
+		String[] deck = new String[21];
+
+		// print initial message
+		System.out.println("You wanna see a card trick?");
+		System.out.println("Pick a card and memorize it or write it down.");
+		System.out.println("Don't tell me what card you picked!");
+		System.out.println("Note: A is the Ace, K is the king, Q is the queen, and J is the jack.");
+		System.out.println("Note: C is clubs, D is diamonds, H is hearts, S is spades");
+
+		// Function to fill the deck with cards
+		BuildDeck(deck, 21);
+		
+		System.out.println(Arrays.toString(deck));
+
+	}
+
+	private static void BuildDeck(String[] deck, int i) {
+		Random rand = new Random();
+		boolean firstTime = true;
+		boolean inDeck = false;
+		int randCard;
+		
+		String[] fullDeck = {"AC","AD","AH","AS","2C","2D","2H","2S","3C","3D","3H","3S","4C","4D","4H","4S",
+							"5C","5D","5H","5S","6C","6D","6H","6S","7C","7D","7H","7S","8C","8D","8H","8S",
+							"9C","9D","9H","9S","10C","10D","10H","10S","JC","JD","JH","JS","QC","QD","QH","QS",
+							"KC","KD","KH","KS"};
+		
+		int[] usedCards = new int[21];
+		
+		int j = 0;
+		while(j < 21) {
+			inDeck = false;
+			randCard = rand.nextInt(52);
+			
+			//duplicate check needs a card in to work, add one on the first run!
+			if(firstTime == true) {
+				System.out.println("First time!");
+				usedCards[j] = randCard;
+				deck[j] = fullDeck[randCard];
+				firstTime = false;
+				j++;
+			}
+			
+			usedCards[j] = randCard;
+			
+			//Loop checking for duplicates
+			if(firstTime != true) {
+				int k = 0;
+				for(k = 0; k < j; k++) {
+					if(usedCards[k] == randCard) {
+						//System.out.println("Card already in deck!");
+						inDeck = true;
+					}
+				}
+				//If no duplicates... add it to the deck!
+				if(inDeck == false) {
+					deck[j] = fullDeck[randCard];
+					j++;
+				}
+			}
+		}
+	}
+}
+
+	
