@@ -17,9 +17,74 @@ public class Main {
 
 		// Function to fill the deck with cards
 		BuildDeck(deck, 21);
-		
+
 		System.out.println(Arrays.toString(deck));
 
+		SortDeck(deck);
+
+	}
+
+	private static void SortDeck(String[] deck) {
+		String[] Row1 = new String[3];
+		String[] Row2 = new String[3];
+		String[] Row3 = new String[3];
+		String[] Row4 = new String[3];
+		String[] Row5 = new String[3];
+		String[] Row6 = new String[3];
+		String[] Row7 = new String[3];
+
+		int mathThing;
+		int i;
+		for (i = 0; i < 21; i++) {
+			switch (i) {
+			case 0:
+			case 1:
+			case 2:
+				Row1[i] = deck[i];
+				break;
+			case 3:
+			case 4:
+			case 5:
+				mathThing = i%3;
+				Row2[mathThing] = deck[i];
+				break;
+			case 6:
+			case 7:
+			case 8:
+				mathThing = i%3;
+				Row3[mathThing] = deck[i];
+				break;
+			case 9:
+			case 10:
+			case 11:
+				mathThing = i%3;
+				Row4[mathThing] = deck[i];
+				break;
+			case 12:
+			case 13:
+			case 14:
+				mathThing = i%3;
+				Row5[mathThing] = deck[i];
+				break;
+			case 15:
+			case 16:
+			case 17:
+				mathThing = i%3;
+				Row6[mathThing] = deck[i];
+				break;
+			case 18:
+			case 19:
+			case 20:
+				mathThing = i%3;
+				Row7[mathThing] = deck[i];
+				break;
+			default:
+				break;
+			}
+		}
+		
+		
+		
 	}
 
 	private static void BuildDeck(String[] deck, int i) {
@@ -27,41 +92,41 @@ public class Main {
 		boolean firstTime = true;
 		boolean inDeck = false;
 		int randCard;
-		
-		String[] fullDeck = {"AC","AD","AH","AS","2C","2D","2H","2S","3C","3D","3H","3S","4C","4D","4H","4S",
-							"5C","5D","5H","5S","6C","6D","6H","6S","7C","7D","7H","7S","8C","8D","8H","8S",
-							"9C","9D","9H","9S","10C","10D","10H","10S","JC","JD","JH","JS","QC","QD","QH","QS",
-							"KC","KD","KH","KS"};
-		
+
+		String[] fullDeck = { "AC", "AD", "AH", "AS", "2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S", "4C", "4D", "4H",
+				"4S", "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S", "7C", "7D", "7H", "7S", "8C", "8D", "8H", "8S",
+				"9C", "9D", "9H", "9S", "10C", "10D", "10H", "10S", "JC", "JD", "JH", "JS", "QC", "QD", "QH", "QS",
+				"KC", "KD", "KH", "KS" };
+
 		int[] usedCards = new int[21];
-		
+
 		int j = 0;
-		while(j < 21) {
+		while (j < 21) {
 			inDeck = false;
 			randCard = rand.nextInt(52);
-			
-			//duplicate check needs a card in to work, add one on the first run!
-			if(firstTime == true) {
+
+			// duplicate check needs a card in to work, add one on the first run!
+			if (firstTime == true) {
 				System.out.println("First time!");
 				usedCards[j] = randCard;
 				deck[j] = fullDeck[randCard];
 				firstTime = false;
 				j++;
 			}
-			
+
 			usedCards[j] = randCard;
-			
-			//Loop checking for duplicates
-			if(firstTime != true) {
+
+			// Loop checking for duplicates
+			if (firstTime != true) {
 				int k = 0;
-				for(k = 0; k < j; k++) {
-					if(usedCards[k] == randCard) {
-						//System.out.println("Card already in deck!");
+				for (k = 0; k < j; k++) {
+					if (usedCards[k] == randCard) {
+						// System.out.println("Card already in deck!");
 						inDeck = true;
 					}
 				}
-				//If no duplicates... add it to the deck!
-				if(inDeck == false) {
+				// If no duplicates... add it to the deck!
+				if (inDeck == false) {
 					deck[j] = fullDeck[randCard];
 					j++;
 				}
@@ -69,5 +134,3 @@ public class Main {
 		}
 	}
 }
-
-	
