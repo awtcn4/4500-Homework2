@@ -3,11 +3,18 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-
+	
 	public static void main(String[] args) throws InterruptedException {
 
-		//create guess
+		boolean playing = true;
+		boolean valid = true;
+		int timesPlayed = 0;
+		
+		Scanner scan = new Scanner(System.in);
+		
+		//create Strings
 		String guess = null;
+		String play;
 		
 		// set the empty deck
 		String[] deck = new String[21];
@@ -19,6 +26,8 @@ public class Main {
 		System.out.println("Note: A is the Ace, K is the king, Q is the queen, and J is the jack.");
 		System.out.println("Note: C is clubs, D is diamonds, H is hearts, S is spades");
 
+		while(playing == true) {
+		
 		// Function to fill the deck with cards
 		BuildDeck(deck, 21);
 
@@ -32,10 +41,74 @@ public class Main {
 			guess = iterate(deck);
 		}
 		
-		System.out.println(guess);
+		System.out.println("The card you picked was " + guess + "!");
+		
+		System.out.println("Would you like to play again(y/n): ");
+		play = scan.next();
+		
+		switch(play) {
+		case "y":
+		case "Y":
+		case "n":
+		case "N":
+			break;
+		default:
+			valid = false;
+			break;
+			}
+		
+		//System.out.println(valid);
+		
+		while(valid == false) {
+			System.out.println("Input was invalid, try again. Enter 'y' to play again or 'n' to not:");
+			
+			play = scan.next();
+			
+			switch(play) {
+			case "y":;
+			case "Y":
+			case "n":
+			case "N":
+				valid = true;
+				break;
+			default:
+				valid = false;
+				break;
+				}
+		}
+		
+		if(valid == true) {
+			timesPlayed++;
+			playing = playAgain(play);
+		}
+		
+		if(playing == false) {
+			System.out.println("Thank you for playing! You played " + timesPlayed + " times.");
+		}
+		
+		}
 
 	}
 
+	private static boolean playAgain(String play) {
+		
+		switch(play) {
+		case "y":
+			return true;
+		case "Y":
+			return true;
+		case "n":
+			return false;
+		case "N":
+			return false;
+		default:
+			break;
+			}
+		
+		return false;
+		
+	}
+	
 	private static String iterate(String[] deck) {
 		Scanner scan = new Scanner(System.in);
 		int guessInt;
@@ -54,8 +127,11 @@ public class Main {
 		print2DArray(format);
 
 		System.out.print("What column is your card in: ");
+		System.out.println("");
 		guessInt = scan.nextInt();
 
+		
+		
 		sortDeck(guessInt, deck, format);
 
 		guessString = deck[10];
