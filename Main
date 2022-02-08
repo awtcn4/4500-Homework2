@@ -1,3 +1,12 @@
+//Java to compile
+//Names: Amaya Saunsaucie and Andrew Taylor
+//Date: 2/7/2022
+//Class: 4500: Intro to software profession
+//What program is designed to do: Pick 21 cards out of a full deck, and then perform the magic trick by getting the chosen card to
+//the 11th spot in the array after 3 iterations of choosing what column it is in.
+//Main Data Structures: Array-this is what the full deck is in and then 21 are chosen, 2d Array-this is what the cards are sorted in
+//External Files: None
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -6,10 +15,14 @@ public class Main {
 	
 	public static void main(String[] args) throws InterruptedException {
 
+		//create bools
 		boolean playing = true;
 		boolean valid = true;
+		
+		//create ints
 		int timesPlayed = 0;
 		
+		//create scanner
 		Scanner scan = new Scanner(System.in);
 		
 		//create Strings
@@ -46,6 +59,7 @@ public class Main {
 		System.out.println("Would you like to play again(y/n): ");
 		play = scan.next();
 		
+		//input validation
 		switch(play) {
 		case "y":
 		case "Y":
@@ -56,8 +70,6 @@ public class Main {
 			valid = false;
 			break;
 			}
-		
-		//System.out.println(valid);
 		
 		while(valid == false) {
 			System.out.println("Input was invalid, try again. Enter 'y' to play again or 'n' to not:");
@@ -77,11 +89,13 @@ public class Main {
 				}
 		}
 		
+		//Check if they want to play again
 		if(valid == true) {
 			timesPlayed++;
 			playing = playAgain(play);
 		}
 		
+		//If they do not want to play again
 		if(playing == false) {
 			System.out.println("Thank you for playing! You played " + timesPlayed + " times.");
 		}
@@ -90,6 +104,7 @@ public class Main {
 
 	}
 
+	//input validation for play again
 	private static boolean playAgain(String play) {
 		
 		switch(play) {
@@ -110,11 +125,21 @@ public class Main {
 	}
 	
 	private static String iterate(String[] deck) {
+		
+		//create bools
+		boolean invalid = true;
+		
+		//create scanner
 		Scanner scan = new Scanner(System.in);
-		int guessInt;
-		String guessString = null;
+		
+		//create ints
+		int guessInt = 0;
 		int num = 0;
-
+		
+		//create string
+		String guessString = null;
+		
+		//puts cards into 2d array
 		String[][] format = new String[7][3];
 		for (int r = 0; r < 7; r++) {
 			for (int c = 0; c < 3; c++) {
@@ -123,22 +148,47 @@ public class Main {
 			}
 
 		}
-
+		
+		//Function to print cards to console
 		print2DArray(format);
-
+		
 		System.out.print("What column is your card in: ");
 		System.out.println("");
-		guessInt = scan.nextInt();
-
+		
+		if(scan.hasNextInt()) {
+			guessInt = scan.nextInt();
+			//Input validation for what column card is in
+			if((guessInt > 3) || (guessInt < 1)) {
+				while((guessInt > 3) || (guessInt < 1)) {
+					System.out.println("Input was invalid, try again. Enter 1,2 or 3:");
+					guessInt = scan.nextInt();
+				}
+				
+			}
+		}else{
+			do {
+			System.out.println("Input was invalid, try again. Enter 1,2 or 3:");
+			guessString = scan.next();
+			if(scan.hasNextInt()) {
+				guessInt = scan.nextInt();
+				invalid = false;
+			}else {
+				invalid = true;
+			}
+			}while(invalid == true);
+		}
 		
 		
+		//sort deck
 		sortDeck(guessInt, deck, format);
 
+		//guess 11th card in deck, this is your card
 		guessString = deck[10];
 		
 		return guessString;
 	}
 
+	//function to sort the deck
 	private static void sortDeck(int guessInt, String[] deck, String[][] format) {
 
 		int num = 0;
@@ -238,6 +288,7 @@ public class Main {
 
 	}
 
+	//simple function to print array to console
 	private static void print2DArray(String[][] format) {
 		System.out.println("Column 1   Column 2   Column 3");
 		for (int i = 0; i < format.length; i++) {
@@ -247,13 +298,14 @@ public class Main {
 
 	}
 
+	//builds the deck
 	private static void BuildDeck(String[] deck, int i) {
 		Random rand = new Random();
 		boolean firstTime = true;
 		boolean inDeck = false;
 		int randCard;
 
-		// Hard code a fulle deck to choose from
+		// Hard code a full deck to choose from
 		String[] fullDeck = { "AC", "AD", "AH", "AS", "2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S", "4C", "4D", "4H",
 				"4S", "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S", "7C", "7D", "7H", "7S", "8C", "8D", "8H", "8S",
 				"9C", "9D", "9H", "9S", "10C", "10D", "10H", "10S", "JC", "JD", "JH", "JS", "QC", "QD", "QH", "QS",
